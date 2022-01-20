@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 contract VestingWalletFactory {
     event VestingWalletCreated(address indexed beneficiaryAddress, address indexed wallet);
 
-    mapping(address => bool) public isVestingWallet;
+    address[] public wallets;
 
     function create(
         address beneficiaryAddress,
@@ -14,7 +14,7 @@ contract VestingWalletFactory {
         uint64 durationSeconds
     ) public returns (address wallet) {
         wallet = address(new VestingWallet(beneficiaryAddress, startTimestamp, durationSeconds));
-        isVestingWallet[wallet] = true;
+        wallets.push(wallet);
         emit VestingWalletCreated(beneficiaryAddress, wallet);
     }
 }
